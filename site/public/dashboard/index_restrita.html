@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../resources/css/indexRestrita_style.css">
+    <link rel="icon" href="../resources/img/LogoCeres.png">
+    <title>CERES | Página inicial </title>
+</head>
+
+<body>
+    <header>
+        <div class="logo">
+            <img src="../resources/img/LogoCeres.png" alt="">
+            <span>Ceres</span>
+        </div>
+        <div class="menu">
+            <b style="font-weight: 500">Olá, <b id="nomeUsuario"></b>!</b>
+            <button class="but" onclick="sair()"><b><a href="../index.html">Sair</a></b></button>
+        </div>
+    </header>
+
+
+    <div class="main">
+        <div class="descricoes">
+            <div class="titulo">Temperatura alertas</div>
+            <div class="subtitulo">Base de cores dos alertas</div>
+
+            <div class="conjunto">
+                <div class="bloco">
+                    <div class="cf"></div>
+                    <span>Crítico frio</span>
+                </div>
+                <div class="bloco">
+                    <div class="af"></div>
+                    <span>Alerta frio</span>
+                </div>
+                <div class="bloco">
+                    <div class="ti"></div>
+                    <span>Temperatura ideal</span>
+                </div>
+                <div class="bloco">
+                    <div class="aq"></div>
+                    <span>Alerta quente</span>
+                </div>
+                <div class="bloco">
+                    <div class="cq"></div>
+                    <span>Crítico quente</span>
+                </div>
+            </div>
+
+            <br>
+            <br>
+
+            <div class="titulo">Umidade alertas</div>
+            <div class="subtitulo">Base de cores dos alertas</div>
+
+            <div class="conjunto">
+                <div class="bloco">
+                    <div class="cs"></div>
+                    <span>Crítico seco</span>
+                </div>
+                <div class="bloco">
+                    <div class="as"></div>
+                    <span>Alerta seco</span>
+                </div>
+                <div class="bloco">
+                    <div class="ui"></div>
+                    <span>Umidade ideal</span>
+                </div>
+                <div class="bloco">
+                    <div class="au"></div>
+                    <span>Alerta úmido</span>
+                </div>
+                <div class="bloco">
+                    <div class="c-u"></div>
+                    <span>Crítico úmido</span>
+                </div>
+            </div>
+        </div>
+        <div class="alerta">
+            <div id="titulo" class="titulo">Plantação 1</div>
+            <div id="plantacao1" class="alertaMain">
+                <div class="card">
+                    <div class="grau">
+                        <div id="ti" class="ti"></div>
+                        <span id="grauTemp">28°C</span>
+                    </div>
+
+                    <img id="emocao" src="" alt="">
+                    <span id="desc" class="desc">Temperatura ideal</span>
+
+                    <span id="horas" class="horas">Último registro: 12:00</span>
+
+                </div>
+            <div class="card">
+                <div class="grau">
+                    <div id="ui" class="ui"></div>
+                    <span id="grauUmi">80%</span>
+                </div>
+
+                <img id="emocao2" src="" alt="">
+                    <span id="desc2" class="desc">Umidade ideal</span>
+
+                    <span id="horas2" class="horas">Último registro: 12:00</span>
+            </div>
+            </div>
+
+            <div class="cent">
+                <button onclick="irDashboard()">Área Dashboard ></button>
+            </div>
+        </div>
+        <div class="plantacoes">
+            <div class="titulo">Plantações</div>
+            <div class="subtitulo">Selecione a plantação na qual deseja monitorar</div>
+
+            <div id="conjunto" class="conjunto">
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>
+
+<script>
+
+document.getElementById('nomeUsuario').innerHTML = sessionStorage.NOME_USUARIO;
+
+listarP(sessionStorage.ID_USUARIO);
+
+window.onload = atualizarCard(1);
+
+function atualizarCard(idC) {
+        // console.log("OAAAAAA" + idzao)     //aguardar();
+        fetch(`/usuarios/listarCard/${idC}`)
+            .then(function (resposta) {
+                if (resposta.ok) {
+                    if (resposta.status == 204) {
+                        // var feed = document.getElementById("feed_container");
+                        // var mensagem = document.createElement("span");
+                        // mensagem.innerHTML = "Nenhum resultado encontrado."
+                        feed.appendChild(mensagem);
+                        throw "Nenhum resultado encontrado!!";
+                    }
+
+                    resposta.json().then(function (resposta) {
+                        // console.log("Dados recebidos: ", JSON.stringify(resposta));
+
+                        // var feed = document.getElementById("feed_container");
+                        // feed.innerHTML = "";
+                        var listinha = resposta;
+                        for (let i = 0; i < resposta.length; i++) {
+                            console.log(listinha[i]);
+                            grauTemp.innerHTML = `${listinha[i].temperatura}°C`;
+                            grauUmi.innerHTML = `${listinha[i].umidade}%`;
+                            horas.innerHTML = `${listinha[i].dtCaptura}`;
+                            horas2.innerHTML = `${listinha[i].dtCaptura}`;
+
+                            if(listinha[i].temperatura < 20){
+                                ti.style.background ='#2F5496';
+                                desc.innerHTML = "Crítico <br> frio";
+                                emocao.src = "../resources/img/tristeza.png";
+                            }
+
+                            else if(listinha[i].temperatura < 22){
+                                ti.style.background = '#8EAADB';
+                                desc.innerHTML = "Alerta frio";
+                                emocao.src = "../resources/img/neutro.png";
+                            }
+
+                            else if(listinha[i].temperatura <= 30){
+                                ti.style.background = '#92D050';
+                                desc.innerHTML = "Temperatura ideal";
+                                emocao.src = "../resources/img/feliz.png";
+
+                            }
+
+                            else if(listinha[i].temperatura <= 34){
+                                ti.style.background = '#FFC000';
+                                desc.innerHTML = "Alerta quente";
+                                emocao.src = "../resources/img/neutro2.png";
+                            }
+
+                            else if(listinha[i].temperatura > 34){
+                                ti.style.background = '#FF0000';
+                                desc.innerHTML = "Crítico quente";
+                                emocao.src = "../resources/img/tristeza2.png";
+                            }
+
+                            if(listinha[i].umidade < 75){
+                                ui.style.background = '#C45911';
+                                desc2.innerHTML = "Crítico <br> seco";
+                                emocao2.src = "../resources/img/triste.png";
+                            }
+
+                            else if(listinha[i].umidade <= 80){
+                                ui.style.background = '#F4B083';
+                                desc2.innerHTML = "Alerta seco";
+                                emocao2.src = "../resources/img/neutro3.png";
+                            }
+
+                            else if(listinha[i].umidade <= 85){
+                                ui.style.background = '#8EAADB';
+                                desc2.innerHTML = "Umidade ideal"
+                                emocao2.src = "../resources/img/feliz2.png";
+                            }
+
+                            else if(listinha[i].umidade <= 88){
+                                ui.style.background = '#2F5496';
+                                desc2.innerHTML = "Alerta úmido"
+                                emocao2.src = "../resources/img/neutro4.png";
+                            }
+
+                            else if(listinha[i].umidade > 88){
+                                ui.style.background = '#1F3864';
+                                desc2.innerHTML = "Crítico úmido"
+                                emocao2.src = "../resources/img/tristeza3.png";
+                            }
+                        }
+
+                        // finalizarAguardar();
+                    });
+                } else {
+                    throw ('Houve um erro na API!');
+                }
+            }).catch(function (resposta) {
+                console.error(resposta);
+                // finalizarAguardar();
+            });
+    }
+
+    function listarP(idp) {
+        // console.log("OAAAAAA" + idzao)     //aguardar();
+        fetch(`/usuarios/listarPlantacao/${idp}`)
+            .then(function (resposta) {
+                if (resposta.ok) {
+                    if (resposta.status == 204) {
+                        // var feed = document.getElementById("feed_container");
+                        // var mensagem = document.createElement("span");
+                        // mensagem.innerHTML = "Nenhum resultado encontrado."
+                        feed.appendChild(mensagem);
+                        throw "Nenhum resultado encontrado!!";
+                    }
+
+                    resposta.json().then(function (resposta) {
+                        // console.log("Dados recebidos: ", JSON.stringify(resposta));
+
+                        // var feed = document.getElementById("feed_container");
+                        // feed.innerHTML = "";
+                        var listinha = resposta;
+                        for (let i = 0; i < resposta.length; i++) {
+                            console.log(listinha[i]);
+                            conjunto.innerHTML += `
+                <div id="${listinha[i].idPlantacao}" onclick="p(${listinha[i].idPlantacao})" class="plantacao">Plantação ${listinha[i].idPlantacao}</div>
+                            
+                            `;
+                        }
+
+                        // finalizarAguardar();
+                    });
+                } else {
+                    throw ('Houve um erro na API!');
+                }
+            }).catch(function (resposta) {
+                console.error(resposta);
+                // finalizarAguardar();
+            });
+    }
+
+function p(idp){
+        // plantacao2.style.display = "none";
+        // plantacao1.style.display = "flex";
+console.log("cu "+idp);
+
+        titulo.innerHTML = `Plantação ${idp}`
+        atualizarCard(idp);
+    }
+
+    function p2(){
+        plantacao1.style.display = "none";
+        plantacao2.style.display = "flex";
+
+        selecao1.style.color = "#CCCCCC";
+        selecao2.style.color = "#00825D";
+
+        titulo.innerHTML = "Plantação 2"
+    }
+
+    function sair() {
+        sessionStorage.clear();
+        document.getElementsByClassName('but').href = '../index.html';
+    }
+
+    function irDashboard(){
+        if(sessionStorage.TIPO_USUARIO == "empresa"){
+            window.location = "dashboardEmpresa.html";
+        }
+
+        else{
+            window.location = "dashboard.html";
+        }
+    }
+</script>
