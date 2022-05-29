@@ -329,8 +329,13 @@ width: 140px;
         padding: 2% 5%;
     }
 
+    .container{
+        flex-direction: column;
+    }
+
     .container .left_side{
-        width: 2%;
+        width: 100%;
+        padding: 20px 0px;
     }
 
     .container .right_side{

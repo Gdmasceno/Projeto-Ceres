@@ -268,7 +268,26 @@ main{
 
 @media screen and (max-width:850px) {
     body{
-        background-color: red;
+        /* background-color: red; */
+        padding: 0;
+    }
+
+    .container .left_side{
+        width: 100%;
+        padding: 0;
+    }
+
+    .container{
+        padding: 0;
+        margin: 0;
+    }
+
+    .container #titulo{
+        font-size: 25px;
+    }
+    
+    .container #texto{
+        font-size: 15px;
     }
 
     .container img{
@@ -279,29 +298,20 @@ main{
         display: none;
     }
 
-    header .img_menu{
-        display: block;
-    }
 
     .container .right_side img{
         width: 200px;
     }
-
-    .container #titulo{
-        font-size: 35px;
-    }
-    
-    .container #texto{
-        font-size: 18px;
-    }
     
     .container .left_side .fake_button{
         width: 130px;
-        font-size: 18px;
+        font-size: 15px;
     }
 
+
     .container .left_side .flex #a{
-        font-size: 18px;
+        font-size: 15px;
+        margin-left: 10px;
     }
     
 }
