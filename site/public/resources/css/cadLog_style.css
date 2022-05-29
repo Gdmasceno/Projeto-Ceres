@@ -338,6 +338,15 @@ width: 140px;
         padding: 20px 0px;
     }
 
+    .left_side .titulo{
+        font-size: 15px;
+    }
+
+    .left_side .subtitulo{
+        font-size: 12px;
+    }
+
+
     .container .right_side{
         width: 98%;
     }
