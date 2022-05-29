@@ -66,19 +66,19 @@ create table usuario(
 idUsuario int primary key identity(1,1),
 email varchar(45),
 senha varchar(20),
-nome varchar(20),
+tipo varchar(20), constraint chkTipo check(tipo = 'empresa' or tipo = 'admin'),
 fkEmpresa int, foreign key (fkEmpresa) references empresa (idEmpresa)
 );
 
 create table plantacao(
-idPlantacao int primary key identity(1,1),
+idPlantacao int primary key,
 cep char(8),
 complemento varchar(45),
 fkEmpresa int, foreign key (fkEmpresa) references empresa (idEmpresa)
 );
 
 create table sensor(
-idSensor int primary key identity(1,1),
+idSensor int primary key,
 nome varchar(45),
 fkPlantacao int, foreign key (fkPlantacao) references plantacao (idPlantacao)
 );
@@ -93,10 +93,27 @@ temperatura float
 );
 
 create table anotacao(
-idAnotacao int,
+idAnotacao int primary key,
 fkUsuario int, foreign key (fkUsuario) references usuario(idUsuario),
 fkEmpresa int, foreign key (fkEmpresa) references empresa(idEmpresa),
-primary key (idAnotacao,fkUsuario,fkEmpresa),
 descricao varchar(45),
 cor varchar (45)
 );
+
+
+
+
+/* SEQUENCIA DE DROPS NO AZURE */
+
+drop table dadosDHT11;
+drop table anotacao;
+drop table sensor;
+drop table plantacao;
+drop table usuario;
+drop table empresa;
+
+
+/* SEQUENCIA DE SELECTS NO AZURE */
+select * from empresa;
+select * from usuario;
+select * from anotacao;

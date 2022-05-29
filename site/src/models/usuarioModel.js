@@ -34,25 +34,15 @@ function cadastrar(nome, email, cnpj, senha) {
     database.executar(instrucao);
 
     var instrucao = `
-    INSERT INTO usuario (email, senha, tipo, fkEmpresa) VALUES ('${email}','${senha}','${tipo}',(SELECT idEmpresa FROM empresa WHERE cnpj = '${cnpj}' ));
+    INSERT INTO usuario (email, senha, tipo, fkEmpresa) VALUES ('${email}','${senha}','empresa',(SELECT idEmpresa FROM empresa WHERE cnpj = '${cnpj}' ));
     `;
     database.executar(instrucao);
 
 
     var instrucao = `
-        INSERT INTO anotacao VALUES (1,(SELECT idEmpresa FROM empresa WHERE cnpj = '${cnpj}'),(SELECT idEmpresa FROM empresa WHERE cnpj = '${cnpj}'),null,null);
-    `;
-
-    database.executar(instrucao);
-
-    var instrucao = `
-        INSERT INTO anotacao VALUES (2,(SELECT idEmpresa FROM empresa WHERE cnpj = '${cnpj}'),(SELECT idEmpresa FROM empresa WHERE cnpj = '${cnpj}'),null,null);
-    `;
-
-    database.executar(instrucao);
-
-    var instrucao = `
-        INSERT INTO anotacao VALUES (3,(SELECT idEmpresa FROM empresa WHERE cnpj = '${cnpj}'),(SELECT idEmpresa FROM empresa WHERE cnpj = '${cnpj}'),null,null);
+        INSERT INTO anotacao VALUES (1,1,(SELECT idEmpresa FROM empresa WHERE cnpj = '${cnpj}'),null,null),
+        (2,1,(SELECT idEmpresa FROM empresa WHERE cnpj = '${cnpj}'),null,null),
+        (3,1,(SELECT idEmpresa FROM empresa WHERE cnpj = '${cnpj}'),null,null);
     `;
 
     database.executar(instrucao);
