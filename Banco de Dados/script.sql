@@ -84,7 +84,7 @@ fkPlantacao int, foreign key (fkPlantacao) references plantacao (idPlantacao)
 );
 
 create table dadosDHT11(
-idDadosDHT11 int,
+idDadosDHT11 int identity(1,1),
 fkSensor int, foreign key (fkSensor) references sensor (idSensor),
 primary key (idDadosDHT11, fkSensor),
 dtCaptura datetime default current_timestamp,
