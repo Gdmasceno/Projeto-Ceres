@@ -2,24 +2,26 @@ var hectares = 0;
 var producao = 0;
 
 function trocarTela() {
-    hectares = ipt_hec.value;
-    producao = ipt_producao.value;
+    hectares = Number(ipt_hec.value);
+    producao = Number(ipt_producao.value);
     page_one.style.display = "none";
     page_two.style.display = "flex";
     let totalAno = calcular(hectares, producao) * 12;
+    // totalAno = lucro com 100% da safra anual
+    console.log(totalAno + ' LUCRO TOTAL');
 
     // Calculando perda máxima do usuário:
 
-    res_perda_cliente.innerHTML = (totalAno * 0.8).toLocaleString('pt-br',{style: 'currency', currency: 'BRL'});
+    res_perda_cliente.innerHTML = (totalAno * 0.8).toLocaleString('pt-br',{style: 'currency', currency: 'BRL'}) + ' a.a.';
 
     // Isso Resultaria no lucro de apenas:
 
-    res_lucro_cliente.innerHTML = "R$" + (totalAno * 0.2).toFixed(2);
+    res_lucro_cliente.innerHTML = (totalAno * 0.2).toLocaleString('pt-br',{style: 'currency', currency: 'BRL'}) + ' a.a.';
     
 
     // Resultado Lucro Total Possível com Ceres abaixo
 
-    res_lucro_ceres.innerHTML = "R$" + (totalAno * 0.95).toFixed(2);
+    res_lucro_ceres.innerHTML = (totalAno * 0.95).toLocaleString('pt-br',{style: 'currency', currency: 'BRL'}) + ' a.a.';
     // 95% de produtividade total
 
     // Resultado saldo:
